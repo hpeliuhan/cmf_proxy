@@ -1,0 +1,26 @@
+# Example snippet for your Deployment
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: cmfproxy
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: cmfproxy
+  template:
+    metadata:
+      labels:
+        app: cmfproxy
+    spec:
+      containers:
+      - name: cmfproxy
+        image: localhost:5000/cmf_proxy
+        volumeMounts:
+        - name: config-volume
+          mountPath: /app/config.json
+          subPath: config.json
+      volumes:
+      - name: config-volume
+        configMap:
+          name: cmfproxy-config
